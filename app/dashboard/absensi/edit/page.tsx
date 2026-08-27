@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
-export default function EditAbsensiPage() {
+function EditAbsensiContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
@@ -51,7 +51,7 @@ export default function EditAbsensiPage() {
     loadAttendance();
   }, [id]);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     setMessage("");
@@ -104,16 +104,13 @@ export default function EditAbsensiPage() {
   if (loading) {
     return (
       <main className="dashboard">
-
         <aside className="sidebar">
-
           <div className="sidebar-logo">
             <span className="logo-icon">S</span>
             <span>SIMMAG</span>
           </div>
 
           <nav className="sidebar-menu">
-
             <Link
               href="/dashboard"
               className="menu-item"
@@ -145,11 +142,9 @@ export default function EditAbsensiPage() {
               <span>📋</span>
               Pengajuan Magang
             </Link>
-
           </nav>
 
           <div className="sidebar-bottom">
-
             <Link
               href="/"
               className="menu-item"
@@ -165,36 +160,28 @@ export default function EditAbsensiPage() {
               <span>↪</span>
               Keluar
             </Link>
-
           </div>
-
         </aside>
 
         <section className="dashboard-content">
-
           <div className="journal-empty">
             Memuat data absensi...
           </div>
-
         </section>
-
       </main>
     );
   }
 
   return (
     <main className="dashboard">
-
       {/* SIDEBAR */}
       <aside className="sidebar">
-
         <div className="sidebar-logo">
           <span className="logo-icon">S</span>
           <span>SIMMAG</span>
         </div>
 
         <nav className="sidebar-menu">
-
           <Link
             href="/dashboard"
             className="menu-item"
@@ -226,11 +213,9 @@ export default function EditAbsensiPage() {
             <span>📋</span>
             Pengajuan Magang
           </Link>
-
         </nav>
 
         <div className="sidebar-bottom">
-
           <Link
             href="/"
             className="menu-item"
@@ -246,20 +231,14 @@ export default function EditAbsensiPage() {
             <span>↪</span>
             Keluar
           </Link>
-
         </div>
-
       </aside>
-
 
       {/* CONTENT */}
       <section className="dashboard-content">
-
         {/* HEADER */}
         <header className="dashboard-header">
-
           <div>
-
             <p className="dashboard-label">
               ABSENSI
             </p>
@@ -271,11 +250,9 @@ export default function EditAbsensiPage() {
             <p className="header-description">
               Ubah data kehadiran magang kamu.
             </p>
-
           </div>
 
           <div className="profile">
-
             <div className="profile-avatar">
               A
             </div>
@@ -284,17 +261,12 @@ export default function EditAbsensiPage() {
               <strong>Abyan</strong>
               <span>Siswa</span>
             </div>
-
           </div>
-
         </header>
-
 
         {/* FORM */}
         <div className="dashboard-card journal-form-card">
-
           <div className="journal-form-header">
-
             <span className="small-title">
               ABSENSI
             </span>
@@ -306,16 +278,11 @@ export default function EditAbsensiPage() {
             <p>
               Perbarui informasi kehadiran kamu.
             </p>
-
           </div>
 
-
           <form onSubmit={handleSubmit}>
-
             {/* TANGGAL */}
-
             <div className="form-group">
-
               <label>
                 Tanggal Kehadiran
               </label>
@@ -329,14 +296,10 @@ export default function EditAbsensiPage() {
                 required
                 disabled={saving}
               />
-
             </div>
 
-
             {/* STATUS */}
-
             <div className="form-group">
-
               <label>
                 Status Kehadiran
               </label>
@@ -349,7 +312,6 @@ export default function EditAbsensiPage() {
                 required
                 disabled={saving}
               >
-
                 <option value="Hadir">
                   Hadir
                 </option>
@@ -365,16 +327,11 @@ export default function EditAbsensiPage() {
                 <option value="Alpa">
                   Alpa
                 </option>
-
               </select>
-
             </div>
 
-
             {/* JAM MASUK */}
-
             <div className="form-group">
-
               <label>
                 Jam Masuk
               </label>
@@ -387,23 +344,17 @@ export default function EditAbsensiPage() {
                 }
                 disabled={saving}
               />
-
             </div>
 
-
             {/* MESSAGE */}
-
             {message && (
               <div className="journal-message">
                 {message}
               </div>
             )}
 
-
             {/* ACTION */}
-
             <div className="journal-form-actions">
-
               <Link
                 href="/dashboard/absensi"
                 className="cancel-button"
@@ -420,15 +371,28 @@ export default function EditAbsensiPage() {
                   ? "Menyimpan..."
                   : "Simpan Perubahan →"}
               </button>
-
             </div>
-
           </form>
-
         </div>
-
       </section>
-
     </main>
+  );
+}
+
+export default function EditAbsensiPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="dashboard">
+          <section className="dashboard-content">
+            <div className="journal-empty">
+              Memuat halaman edit absensi...
+            </div>
+          </section>
+        </main>
+      }
+    >
+      <EditAbsensiContent />
+    </Suspense>
   );
 }
