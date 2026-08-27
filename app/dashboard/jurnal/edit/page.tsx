@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 
-export default function EditJurnalPage() {
-  const supabase = createClient();
+const supabase = createClient();
 
+function EditJurnalContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -54,11 +54,27 @@ export default function EditJurnalPage() {
     getJournal();
   }, [id]);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(
+    e: React.FormEvent<HTMLFormElement>
+  ) {
     e.preventDefault();
 
     if (!id) {
       setMessage("ID jurnal tidak ditemukan.");
+      return;
+    }
+
+    if (!title.trim()) {
+      setMessage("Judul kegiatan wajib diisi.");
+      return;
+    }
+
+    if (!description.trim()) {
+      setMessage("Deskripsi kegiatan wajib diisi.");
+      return;
+    }
+
+    if (saving) {
       return;
     }
 
@@ -68,8 +84,8 @@ export default function EditJurnalPage() {
     const { error } = await supabase
       .from("journals")
       .update({
-        title: title,
-        description: description,
+        title: title.trim(),
+        description: description.trim(),
       })
       .eq("id", id);
 
@@ -103,17 +119,14 @@ export default function EditJurnalPage() {
 
   return (
     <main className="dashboard">
-
       {/* SIDEBAR */}
       <aside className="sidebar">
-
         <div className="sidebar-logo">
           <span className="logo-icon">S</span>
           <span>SIMMAG</span>
         </div>
 
         <nav className="sidebar-menu">
-
           <Link
             href="/dashboard"
             className="menu-item"
@@ -145,11 +158,9 @@ export default function EditJurnalPage() {
             <span>📋</span>
             Pengajuan Magang
           </Link>
-
         </nav>
 
         <div className="sidebar-bottom">
-
           <Link
             href="/"
             className="menu-item"
@@ -165,26 +176,19 @@ export default function EditJurnalPage() {
             <span>↪</span>
             Keluar
           </Link>
-
         </div>
-
       </aside>
-
 
       {/* CONTENT */}
       <section className="dashboard-content">
-
         {/* HEADER */}
         <header className="dashboard-header">
-
           <div>
             <p className="dashboard-label">
               JURNAL HARIAN
             </p>
 
-            <h1>
-              Edit Jurnal
-            </h1>
+            <h1>Edit Jurnal</h1>
 
             <p className="header-description">
               Ubah informasi kegiatan magang kamu.
@@ -192,7 +196,6 @@ export default function EditJurnalPage() {
           </div>
 
           <div className="profile">
-
             <div className="profile-avatar">
               A
             </div>
@@ -201,58 +204,51 @@ export default function EditJurnalPage() {
               <strong>Abyan</strong>
               <span>Siswa</span>
             </div>
-
           </div>
-
         </header>
-
 
         {/* FORM */}
         <div className="dashboard-card journal-form-card">
-
           <div className="journal-form-header">
-
             <span className="small-title">
               EDIT JURNAL
             </span>
 
-            <h2>
-              Ubah Kegiatan
-            </h2>
+            <h2>Ubah Kegiatan</h2>
 
             <p>
               Perbarui informasi kegiatan magang kamu.
             </p>
-
           </div>
 
-
           <form onSubmit={handleSubmit}>
-
+            {/* JUDUL */}
             <div className="form-group">
-
-              <label>
+              <label htmlFor="title">
                 Judul Kegiatan
               </label>
 
               <input
+                id="title"
                 type="text"
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) =>
+                  setTitle(e.target.value)
+                }
                 placeholder="Masukkan judul kegiatan"
                 required
+                disabled={saving}
               />
-
             </div>
 
-
+            {/* DESKRIPSI */}
             <div className="form-group">
-
-              <label>
+              <label htmlFor="description">
                 Deskripsi Kegiatan
               </label>
 
               <textarea
+                id="description"
                 value={description}
                 onChange={(e) =>
                   setDescription(e.target.value)
@@ -260,20 +256,19 @@ export default function EditJurnalPage() {
                 placeholder="Masukkan deskripsi kegiatan"
                 rows={7}
                 required
+                disabled={saving}
               />
-
             </div>
 
-
+            {/* MESSAGE */}
             {message && (
               <div className="journal-message">
                 {message}
               </div>
             )}
 
-
+            {/* ACTIONS */}
             <div className="journal-form-actions">
-
               <Link
                 href="/dashboard/jurnal"
                 className="cancel-button"
@@ -290,15 +285,28 @@ export default function EditJurnalPage() {
                   ? "Menyimpan..."
                   : "Simpan Perubahan →"}
               </button>
-
             </div>
-
           </form>
-
         </div>
-
       </section>
-
     </main>
+  );
+}
+
+export default function EditJurnalPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="dashboard">
+          <section className="dashboard-content">
+            <div className="journal-empty">
+              Memuat halaman edit jurnal...
+            </div>
+          </section>
+        </main>
+      }
+    >
+      <EditJurnalContent />
+    </Suspense>
   );
 }

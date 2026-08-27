@@ -1,11 +1,11 @@
 "use client";
 
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
-export default function EditPengajuanPage() {
+function EditPengajuanContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -58,11 +58,42 @@ export default function EditPengajuanPage() {
     loadApplication();
   }, [id]);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(
+    e: React.FormEvent<HTMLFormElement>
+  ) {
     e.preventDefault();
 
     if (!id) {
       setMessage("ID pengajuan tidak ditemukan.");
+      return;
+    }
+
+    if (!companyName.trim()) {
+      setMessage("Nama perusahaan wajib diisi.");
+      return;
+    }
+
+    if (!supervisorName.trim()) {
+      setMessage("Nama pembimbing wajib diisi.");
+      return;
+    }
+
+    if (!companyAddress.trim()) {
+      setMessage("Alamat perusahaan wajib diisi.");
+      return;
+    }
+
+    if (!startDate) {
+      setMessage("Tanggal mulai wajib diisi.");
+      return;
+    }
+
+    if (!endDate) {
+      setMessage("Tanggal selesai wajib diisi.");
+      return;
+    }
+
+    if (saving) {
       return;
     }
 
@@ -74,12 +105,12 @@ export default function EditPengajuanPage() {
     const { error } = await supabase
       .from("applications")
       .update({
-        company_name: companyName,
-        supervisor_name: supervisorName,
-        company_address: companyAddress,
+        company_name: companyName.trim(),
+        supervisor_name: supervisorName.trim(),
+        company_address: companyAddress.trim(),
         start_date: startDate,
         end_date: endDate,
-        description: description,
+        description: description.trim(),
       })
       .eq("id", id);
 
@@ -113,17 +144,14 @@ export default function EditPengajuanPage() {
 
   return (
     <main className="dashboard">
-
       {/* SIDEBAR */}
       <aside className="sidebar">
-
         <div className="sidebar-logo">
           <span className="logo-icon">S</span>
           <span>SIMMAG</span>
         </div>
 
         <nav className="sidebar-menu">
-
           <Link
             href="/dashboard"
             className="menu-item"
@@ -155,11 +183,9 @@ export default function EditPengajuanPage() {
             <span>📋</span>
             Pengajuan Magang
           </Link>
-
         </nav>
 
         <div className="sidebar-bottom">
-
           <Link
             href="/"
             className="menu-item"
@@ -175,35 +201,26 @@ export default function EditPengajuanPage() {
             <span>↪</span>
             Keluar
           </Link>
-
         </div>
-
       </aside>
-
 
       {/* CONTENT */}
       <section className="dashboard-content">
-
+        {/* HEADER */}
         <header className="dashboard-header">
-
           <div>
-
             <p className="dashboard-label">
               PENGAJUAN MAGANG
             </p>
 
-            <h1>
-              Edit Pengajuan
-            </h1>
+            <h1>Edit Pengajuan</h1>
 
             <p className="header-description">
               Ubah informasi pengajuan magang kamu.
             </p>
-
           </div>
 
           <div className="profile">
-
             <div className="profile-avatar">
               A
             </div>
@@ -212,17 +229,12 @@ export default function EditPengajuanPage() {
               <strong>Abyan</strong>
               <span>Siswa</span>
             </div>
-
           </div>
-
         </header>
-
 
         {/* FORM */}
         <div className="dashboard-card journal-form-card">
-
           <div className="journal-form-header">
-
             <span className="small-title">
               EDIT PENGAJUAN
             </span>
@@ -234,20 +246,17 @@ export default function EditPengajuanPage() {
             <p>
               Perbarui informasi tempat magang kamu.
             </p>
-
           </div>
 
-
           <form onSubmit={handleSubmit}>
-
             {/* NAMA PERUSAHAAN */}
             <div className="form-group">
-
-              <label>
+              <label htmlFor="companyName">
                 Nama Perusahaan
               </label>
 
               <input
+                id="companyName"
                 type="text"
                 value={companyName}
                 onChange={(e) =>
@@ -255,19 +264,18 @@ export default function EditPengajuanPage() {
                 }
                 placeholder="Masukkan nama perusahaan"
                 required
+                disabled={saving}
               />
-
             </div>
-
 
             {/* PEMBIMBING */}
             <div className="form-group">
-
-              <label>
+              <label htmlFor="supervisorName">
                 Nama Pembimbing
               </label>
 
               <input
+                id="supervisorName"
                 type="text"
                 value={supervisorName}
                 onChange={(e) =>
@@ -275,19 +283,18 @@ export default function EditPengajuanPage() {
                 }
                 placeholder="Masukkan nama pembimbing"
                 required
+                disabled={saving}
               />
-
             </div>
-
 
             {/* ALAMAT */}
             <div className="form-group">
-
-              <label>
+              <label htmlFor="companyAddress">
                 Alamat Perusahaan
               </label>
 
               <input
+                id="companyAddress"
                 type="text"
                 value={companyAddress}
                 onChange={(e) =>
@@ -295,66 +302,63 @@ export default function EditPengajuanPage() {
                 }
                 placeholder="Masukkan alamat perusahaan"
                 required
+                disabled={saving}
               />
-
             </div>
 
-
-            {/* TANGGAL */}
+            {/* TANGGAL MULAI */}
             <div className="form-group">
-
-              <label>
+              <label htmlFor="startDate">
                 Tanggal Mulai
               </label>
 
               <input
+                id="startDate"
                 type="date"
                 value={startDate}
                 onChange={(e) =>
                   setStartDate(e.target.value)
                 }
                 required
+                disabled={saving}
               />
-
             </div>
 
-
+            {/* TANGGAL SELESAI */}
             <div className="form-group">
-
-              <label>
+              <label htmlFor="endDate">
                 Tanggal Selesai
               </label>
 
               <input
+                id="endDate"
                 type="date"
                 value={endDate}
                 onChange={(e) =>
                   setEndDate(e.target.value)
                 }
                 required
+                disabled={saving}
               />
-
             </div>
-
 
             {/* DESKRIPSI */}
             <div className="form-group">
-
-              <label>
+              <label htmlFor="description">
                 Deskripsi
               </label>
 
               <textarea
+                id="description"
                 value={description}
                 onChange={(e) =>
                   setDescription(e.target.value)
                 }
                 placeholder="Masukkan deskripsi pengajuan"
                 rows={7}
+                disabled={saving}
               />
-
             </div>
-
 
             {/* MESSAGE */}
             {message && (
@@ -363,10 +367,8 @@ export default function EditPengajuanPage() {
               </div>
             )}
 
-
             {/* ACTION */}
             <div className="journal-form-actions">
-
               <Link
                 href="/dashboard/pengajuan"
                 className="cancel-button"
@@ -383,15 +385,28 @@ export default function EditPengajuanPage() {
                   ? "Menyimpan..."
                   : "Simpan Perubahan →"}
               </button>
-
             </div>
-
           </form>
-
         </div>
-
       </section>
-
     </main>
+  );
+}
+
+export default function EditPengajuanPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="dashboard">
+          <section className="dashboard-content">
+            <div className="journal-empty">
+              Memuat halaman edit pengajuan...
+            </div>
+          </section>
+        </main>
+      }
+    >
+      <EditPengajuanContent />
+    </Suspense>
   );
 }

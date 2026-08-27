@@ -1,7 +1,7 @@
 "use client";
 
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
@@ -13,7 +13,7 @@ type Journal = {
   created_at: string;
 };
 
-export default function DetailJurnalPage() {
+function DetailJurnalContent() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 
@@ -72,9 +72,7 @@ export default function DetailJurnalPage() {
           <div className="journal-empty">
             <h3>Jurnal tidak ditemukan</h3>
 
-            <p>
-              {errorMessage}
-            </p>
+            <p>{errorMessage}</p>
 
             <Link
               href="/dashboard/jurnal"
@@ -106,17 +104,14 @@ export default function DetailJurnalPage() {
 
   return (
     <main className="dashboard">
-
       {/* SIDEBAR */}
       <aside className="sidebar">
-
         <div className="sidebar-logo">
           <span className="logo-icon">S</span>
           <span>SIMMAG</span>
         </div>
 
         <nav className="sidebar-menu">
-
           <Link
             href="/dashboard"
             className="menu-item"
@@ -148,11 +143,9 @@ export default function DetailJurnalPage() {
             <span>📋</span>
             Pengajuan Magang
           </Link>
-
         </nav>
 
         <div className="sidebar-bottom">
-
           <Link
             href="/"
             className="menu-item"
@@ -168,153 +161,89 @@ export default function DetailJurnalPage() {
             <span>↪</span>
             Keluar
           </Link>
-
         </div>
-
       </aside>
-
 
       {/* CONTENT */}
       <section className="dashboard-content">
-
         {/* HEADER */}
         <header className="dashboard-header">
-
           <div>
-
             <p className="dashboard-label">
               JURNAL HARIAN
             </p>
 
-            <h1>
-              Detail Jurnal
-            </h1>
+            <h1>Detail Jurnal</h1>
 
             <p className="header-description">
               Lihat detail kegiatan magang kamu.
             </p>
-
           </div>
-
         </header>
-
 
         {/* DETAIL CARD */}
         <div className="journal-detail-card">
-
           {/* TOP */}
-
           <div className="detail-top">
-
             <div className="detail-date">
+              <strong>{day}</strong>
 
-              <strong>
-                {day}
-              </strong>
-
-              <span>
-                {month}
-              </span>
-
+              <span>{month}</span>
             </div>
 
-
             <div>
-
               <span className="journal-status">
                 {journal.status}
               </span>
 
-              <h2>
-                {journal.title}
-              </h2>
+              <h2>{journal.title}</h2>
 
-              <p>
-                {fullDate}
-              </p>
-
+              <p>{fullDate}</p>
             </div>
-
           </div>
-
 
           {/* DESCRIPTION */}
-
           <div className="detail-section">
+            <h3>Deskripsi Kegiatan</h3>
 
-            <h3>
-              Deskripsi Kegiatan
-            </h3>
-
-            <p>
-              {journal.description}
-            </p>
-
+            <p>{journal.description}</p>
           </div>
 
-
           {/* INFORMATION */}
-
           <div className="detail-section">
-
-            <h3>
-              Informasi
-            </h3>
+            <h3>Informasi</h3>
 
             <div className="detail-info-grid">
-
               <div>
-                <span>
-                  Tanggal
-                </span>
+                <span>Tanggal</span>
 
-                <strong>
-                  {fullDate}
-                </strong>
+                <strong>{fullDate}</strong>
               </div>
 
-
               <div>
-                <span>
-                  Status
-                </span>
+                <span>Status</span>
 
                 <strong className="green-text">
                   {journal.status}
                 </strong>
               </div>
 
-
               <div>
-                <span>
-                  Kategori
-                </span>
+                <span>Kategori</span>
 
-                <strong>
-                  Kegiatan Magang
-                </strong>
+                <strong>Kegiatan Magang</strong>
               </div>
 
-
               <div>
-                <span>
-                  Penulis
-                </span>
+                <span>Penulis</span>
 
-                <strong>
-                  Abyan
-                </strong>
+                <strong>Abyan</strong>
               </div>
-
             </div>
-
           </div>
 
-
           {/* ACTIONS */}
-
           <div className="detail-actions">
-
             <Link
               href="/dashboard/jurnal"
               className="cancel-button"
@@ -328,13 +257,27 @@ export default function DetailJurnalPage() {
             >
               ✏ Edit Jurnal
             </Link>
-
           </div>
-
         </div>
-
       </section>
-
     </main>
+  );
+}
+
+export default function DetailJurnalPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="dashboard">
+          <section className="dashboard-content">
+            <div className="journal-empty">
+              Memuat halaman detail jurnal...
+            </div>
+          </section>
+        </main>
+      }
+    >
+      <DetailJurnalContent />
+    </Suspense>
   );
 }

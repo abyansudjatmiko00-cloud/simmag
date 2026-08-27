@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -17,7 +17,7 @@ type Application = {
   created_at: string;
 };
 
-export default function DetailPengajuanPage() {
+function DetailPengajuanContent() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 
@@ -25,11 +25,12 @@ export default function DetailPengajuanPage() {
     useState<Application | null>(null);
 
   const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     async function loadApplication() {
-
       if (!id) {
+        setErrorMessage("ID pengajuan tidak ditemukan.");
         setLoading(false);
         return;
       }
@@ -48,6 +49,10 @@ export default function DetailPengajuanPage() {
           error
         );
 
+        setErrorMessage(
+          `Gagal mengambil data pengajuan. ${error.message || ""}`
+        );
+
         setLoading(false);
         return;
       }
@@ -62,15 +67,11 @@ export default function DetailPengajuanPage() {
   if (loading) {
     return (
       <main className="dashboard">
-
         <section className="dashboard-content">
-
           <div className="journal-empty">
             Memuat detail pengajuan...
           </div>
-
         </section>
-
       </main>
     );
   }
@@ -78,11 +79,8 @@ export default function DetailPengajuanPage() {
   if (!application) {
     return (
       <main className="dashboard">
-
         <section className="dashboard-content">
-
           <div className="journal-empty">
-
             <div className="journal-empty-icon">
               📋
             </div>
@@ -92,7 +90,8 @@ export default function DetailPengajuanPage() {
             </h3>
 
             <p>
-              Data pengajuan yang kamu cari tidak tersedia.
+              {errorMessage ||
+                "Data pengajuan yang kamu cari tidak tersedia."}
             </p>
 
             <Link
@@ -101,36 +100,22 @@ export default function DetailPengajuanPage() {
             >
               ← Kembali ke Pengajuan
             </Link>
-
           </div>
-
         </section>
-
       </main>
     );
   }
 
-  const startDate = new Date(
-    `${application.start_date}T00:00:00`
-  );
-
-  const endDate = new Date(
-    `${application.end_date}T00:00:00`
-  );
-
   return (
     <main className="dashboard">
-
       {/* SIDEBAR */}
       <aside className="sidebar">
-
         <div className="sidebar-logo">
           <span className="logo-icon">S</span>
           <span>SIMMAG</span>
         </div>
 
         <nav className="sidebar-menu">
-
           <Link
             href="/dashboard"
             className="menu-item"
@@ -162,11 +147,9 @@ export default function DetailPengajuanPage() {
             <span>📋</span>
             Pengajuan Magang
           </Link>
-
         </nav>
 
         <div className="sidebar-bottom">
-
           <Link
             href="/"
             className="menu-item"
@@ -182,19 +165,14 @@ export default function DetailPengajuanPage() {
             <span>↪</span>
             Keluar
           </Link>
-
         </div>
-
       </aside>
 
       {/* CONTENT */}
       <section className="dashboard-content">
-
         {/* HEADER */}
         <header className="dashboard-header">
-
           <div>
-
             <p className="dashboard-label">
               PENGAJUAN MAGANG
             </p>
@@ -206,11 +184,9 @@ export default function DetailPengajuanPage() {
             <p className="header-description">
               Lihat informasi lengkap pengajuan magang kamu.
             </p>
-
           </div>
 
           <div className="profile">
-
             <div className="profile-avatar">
               A
             </div>
@@ -219,16 +195,12 @@ export default function DetailPengajuanPage() {
               <strong>Abyan</strong>
               <span>Siswa</span>
             </div>
-
           </div>
-
         </header>
 
         {/* DETAIL */}
         <div className="dashboard-card journal-form-card">
-
           <div className="journal-form-header">
-
             <span className="small-title">
               DETAIL PENGAJUAN
             </span>
@@ -240,11 +212,10 @@ export default function DetailPengajuanPage() {
             <p>
               Status: {application.status}
             </p>
-
           </div>
 
+          {/* NAMA PERUSAHAAN */}
           <div className="form-group">
-
             <label>
               Nama Perusahaan
             </label>
@@ -254,11 +225,10 @@ export default function DetailPengajuanPage() {
               value={application.company_name}
               readOnly
             />
-
           </div>
 
+          {/* PEMBIMBING */}
           <div className="form-group">
-
             <label>
               Nama Pembimbing
             </label>
@@ -268,11 +238,10 @@ export default function DetailPengajuanPage() {
               value={application.supervisor_name}
               readOnly
             />
-
           </div>
 
+          {/* ALAMAT */}
           <div className="form-group">
-
             <label>
               Alamat Perusahaan
             </label>
@@ -282,19 +251,18 @@ export default function DetailPengajuanPage() {
               rows={4}
               readOnly
             />
-
           </div>
 
+          {/* TANGGAL */}
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "1fr 1fr",
+              gridTemplateColumns:
+                "1fr 1fr",
               gap: "20px",
             }}
           >
-
             <div className="form-group">
-
               <label>
                 Tanggal Mulai
               </label>
@@ -304,11 +272,9 @@ export default function DetailPengajuanPage() {
                 value={application.start_date}
                 readOnly
               />
-
             </div>
 
             <div className="form-group">
-
               <label>
                 Tanggal Selesai
               </label>
@@ -318,13 +284,11 @@ export default function DetailPengajuanPage() {
                 value={application.end_date}
                 readOnly
               />
-
             </div>
-
           </div>
 
+          {/* DESKRIPSI */}
           <div className="form-group">
-
             <label>
               Deskripsi
             </label>
@@ -337,20 +301,18 @@ export default function DetailPengajuanPage() {
               rows={6}
               readOnly
             />
-
           </div>
 
+          {/* STATUS */}
           <div className="journal-message">
-
             Status Pengajuan:{" "}
             <strong>
               {application.status}
             </strong>
-
           </div>
 
+          {/* ACTION */}
           <div className="journal-form-actions">
-
             <Link
               href="/dashboard/pengajuan"
               className="cancel-button"
@@ -364,13 +326,27 @@ export default function DetailPengajuanPage() {
             >
               ✏ Edit Pengajuan
             </Link>
-
           </div>
-
         </div>
-
       </section>
-
     </main>
+  );
+}
+
+export default function DetailPengajuanPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="dashboard">
+          <section className="dashboard-content">
+            <div className="journal-empty">
+              Memuat halaman detail pengajuan...
+            </div>
+          </section>
+        </main>
+      }
+    >
+      <DetailPengajuanContent />
+    </Suspense>
   );
 }
