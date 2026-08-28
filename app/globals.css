@@ -906,53 +906,7 @@ a {
 
 /* RESPONSIVE */
 
-@media (max-width: 1000px) {
 
-  .dashboard-stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-  }
-
-}
-
-@media (max-width: 700px) {
-
-  .sidebar {
-    width: 70px;
-    padding: 20px 8px;
-  }
-
-  .sidebar-logo span:last-child,
-  .menu-item:not(.active) {
-    font-size: 0;
-  }
-
-  .menu-item {
-    justify-content: center;
-  }
-
-  .dashboard-content {
-    margin-left: 70px;
-    width: calc(100% - 70px);
-    padding: 25px 20px;
-  }
-
-  .dashboard-stats {
-    grid-template-columns: 1fr;
-  }
-
-  .dashboard-header {
-    align-items: flex-start;
-  }
-
-  .profile {
-    display: none;
-  }
-
-}
 
 .login-submit {
   height: 46px;
@@ -1907,4 +1861,853 @@ a {
   color: #64748b;
   font-size: 12px;
   margin-bottom: 20px;
+}
+
+/* =========================================================
+   SIMMAG - RESPONSIVE SYSTEM
+   Desktop / Tablet / Mobile
+   ========================================================= */
+
+/* ---------- GLOBAL RESPONSIVE SAFETY ---------- */
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  max-width: 100%;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =========================================================
+   TABLET
+   769px - 1100px
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+  /* LANDING PAGE */
+
+  .nav-container,
+  .hero-container,
+  .feature-grid,
+  .footer-container {
+    max-width: calc(100% - 40px);
+  }
+
+  .hero-container {
+    gap: 45px;
+  }
+
+  .hero h1 {
+    font-size: 52px;
+  }
+
+  .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+
+  /* DASHBOARD */
+
+  .sidebar {
+    width: 220px;
+  }
+
+  .dashboard-content {
+    margin-left: 220px;
+    width: calc(100% - 220px);
+    padding: 30px;
+  }
+
+  .dashboard-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .attendance-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .journal-detail-card,
+  .journal-form-card,
+  .application-card,
+  .submission-success {
+    max-width: 100%;
+  }
+}
+
+
+/* =========================================================
+   TABLET SMALL
+   769px - 900px
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .dashboard-content {
+    padding: 25px;
+  }
+
+  .dashboard-header {
+    gap: 20px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 26px;
+  }
+
+  .profile {
+    flex-shrink: 0;
+  }
+
+  .attendance-main-card {
+    padding: 22px;
+  }
+
+  .application-card,
+  .journal-form-card,
+  .journal-detail-card {
+    padding: 25px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   <= 768px
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  /* =======================================================
+     LANDING PAGE
+     ======================================================= */
+
+  .navbar {
+    height: 64px;
+  }
+
+  .nav-container {
+    max-width: calc(100% - 30px);
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .logo-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .login-button {
+    padding: 9px 15px;
+    font-size: 12px;
+  }
+
+  .hero {
+    padding: 55px 0;
+  }
+
+  .hero-container {
+    width: 100%;
+    max-width: calc(100% - 30px);
+    grid-template-columns: 1fr;
+    gap: 45px;
+  }
+
+  .hero h1 {
+    font-size: clamp(38px, 11vw, 48px);
+    line-height: 1.08;
+    letter-spacing: -2px;
+  }
+
+  .hero-content > p {
+    font-size: 15px;
+    line-height: 1.7;
+    margin-top: 18px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-card {
+    width: 100%;
+    padding: 18px;
+    transform: none;
+  }
+
+  .stats-card {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 7px;
+  }
+
+  .stats-card > div {
+    padding: 10px 7px;
+  }
+
+  .stats-card span {
+    font-size: 15px;
+  }
+
+  .stats-card strong {
+    font-size: 15px;
+  }
+
+  .features {
+    padding: 65px 0;
+  }
+
+  .section-title {
+    max-width: calc(100% - 30px);
+  }
+
+  .section-title h2 {
+    font-size: 34px;
+  }
+
+  .feature-grid {
+    width: 100%;
+    max-width: calc(100% - 30px);
+    grid-template-columns: 1fr;
+    margin-top: 35px;
+  }
+
+  .feature-card {
+    padding: 22px;
+  }
+
+  .footer {
+    padding-top: 45px;
+  }
+
+  .footer-container {
+    width: 100%;
+    max-width: calc(100% - 30px);
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+
+  /* =======================================================
+     LOGIN
+     ======================================================= */
+
+  .login-page {
+    padding: 15px;
+  }
+
+  .login-box {
+    width: 100%;
+    padding: 25px 20px;
+    border-radius: 14px;
+  }
+
+  .login-box h1 {
+    font-size: 25px;
+  }
+
+
+  /* =======================================================
+     DASHBOARD
+     ======================================================= */
+
+  .dashboard {
+    display: block;
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  /*
+     MOBILE:
+     Sidebar tidak lagi mengambil 70px.
+     Konten menggunakan seluruh lebar layar.
+  */
+
+  .sidebar {
+    position: fixed;
+    z-index: 1000;
+
+    width: 280px;
+    height: 100vh;
+    min-height: 100vh;
+
+    left: -290px;
+    top: 0;
+    bottom: auto;
+
+    padding: 22px 15px;
+
+    box-shadow: 10px 0 30px rgba(15, 23, 42, 0.12);
+
+    transition: left 0.25s ease;
+  }
+
+  /*
+     Kalau nanti sidebar diberi class .open
+     dari React/Next.js, sidebar akan muncul.
+  */
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .sidebar-logo {
+    padding-bottom: 25px;
+  }
+
+  .sidebar-logo span:last-child {
+    display: inline;
+    font-size: 20px;
+  }
+
+  .menu-item {
+    justify-content: flex-start;
+  }
+
+  .menu-item:not(.active) {
+    font-size: 14px;
+  }
+
+
+  /* CONTENT */
+
+  .dashboard-content {
+    margin-left: 0;
+    width: 100%;
+    min-width: 0;
+
+    padding: 20px 15px 35px;
+  }
+
+
+  /* HEADER */
+
+  .dashboard-header {
+    width: 100%;
+    margin-bottom: 25px;
+
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 24px;
+    line-height: 1.25;
+  }
+
+  .dashboard-label {
+    font-size: 10px;
+  }
+
+  .header-description {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .profile {
+    display: none;
+  }
+
+
+  /* STATISTICS */
+
+  .dashboard-stats {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .dashboard-stat {
+    min-width: 0;
+    padding: 14px;
+    gap: 10px;
+  }
+
+  .stat-icon {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    font-size: 16px;
+  }
+
+  .dashboard-stat span {
+    font-size: 9px;
+  }
+
+  .dashboard-stat strong {
+    font-size: 19px;
+  }
+
+
+  /* DASHBOARD GRID */
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .dashboard-card {
+    min-width: 0;
+    padding: 18px;
+    border-radius: 11px;
+  }
+
+  .card-title h2,
+  .card-heading h2 {
+    font-size: 16px;
+  }
+
+
+  /* ACTIVITY */
+
+  .activity-item {
+    gap: 10px;
+    padding: 14px 0;
+  }
+
+  .activity-date {
+    width: 40px;
+    height: 45px;
+    flex-shrink: 0;
+  }
+
+  .activity-date strong {
+    font-size: 15px;
+  }
+
+  .activity-text {
+    min-width: 0;
+  }
+
+  .activity-text strong {
+    font-size: 12px;
+  }
+
+  .activity-text p {
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  .activity-status {
+    flex-shrink: 0;
+    font-size: 9px;
+    padding: 4px 7px;
+  }
+
+
+  /* =======================================================
+     JURNAL
+     ======================================================= */
+
+  .journal-action {
+    padding: 18px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+
+  .journal-action h2 {
+    font-size: 16px;
+  }
+
+  .journal-action p {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  .add-journal-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .journal-card {
+    padding: 15px;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .journal-date {
+    width: 48px;
+    height: 58px;
+  }
+
+  .journal-date strong {
+    font-size: 20px;
+  }
+
+  .journal-content {
+    min-width: 0;
+  }
+
+  .journal-title-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .journal-title-row h3 {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .journal-title-row p {
+    font-size: 11px;
+    line-height: 1.6;
+  }
+
+  .journal-status {
+    width: fit-content;
+  }
+
+  .journal-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .journal-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+
+  /* =======================================================
+     FORM JURNAL
+     ======================================================= */
+
+  .journal-form-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px 16px;
+  }
+
+  .form-header h2,
+  .journal-form-heading h2 {
+    font-size: 17px;
+  }
+
+  .form-header p,
+  .journal-form-heading p {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    min-width: 0;
+    font-size: 13px;
+  }
+
+  .form-actions,
+  .journal-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions > *,
+  .journal-form-actions > * {
+    width: 100%;
+    text-align: center;
+  }
+
+
+  /* =======================================================
+     DETAIL JURNAL
+     ======================================================= */
+
+  .journal-detail-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px 16px;
+  }
+
+  .detail-top {
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .detail-date {
+    width: 58px;
+    height: 65px;
+  }
+
+  .detail-date strong {
+    font-size: 23px;
+  }
+
+  .detail-top h2 {
+    font-size: 18px;
+    line-height: 1.35;
+  }
+
+  .detail-top p {
+    font-size: 11px;
+  }
+
+  .detail-info-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .detail-actions {
+    flex-direction: column;
+  }
+
+  .detail-actions > * {
+    width: 100%;
+    text-align: center;
+  }
+
+
+  /* =======================================================
+     ABSENSI
+     ======================================================= */
+
+  .attendance-main-card {
+    padding: 18px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+
+  .attendance-icon {
+    width: 52px;
+    height: 52px;
+    font-size: 22px;
+  }
+
+  .attendance-info h2 {
+    font-size: 18px;
+  }
+
+  .attendance-info p {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  .attendance-button {
+    width: 100%;
+  }
+
+  .attendance-stats {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .attendance-stat-card {
+    padding: 15px;
+  }
+
+  /*
+     Tabel absensi dibuat scroll horizontal
+     agar tidak menghancurkan layout HP.
+  */
+
+  .attendance-history {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .attendance-table {
+    min-width: 500px;
+  }
+
+
+  /* =======================================================
+     PENGAJUAN MAGANG
+     ======================================================= */
+
+  .application-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px 16px;
+  }
+
+  .application-heading h2 {
+    font-size: 18px;
+  }
+
+  .application-heading p {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .form-group.full {
+    grid-column: auto;
+  }
+
+  .application-actions {
+    flex-direction: column-reverse;
+  }
+
+  .application-actions > * {
+    width: 100%;
+    text-align: center;
+  }
+
+  .application-info {
+    width: 100%;
+    padding: 15px;
+    align-items: flex-start;
+  }
+
+  .application-info p {
+    font-size: 10px;
+    line-height: 1.6;
+  }
+
+  .submission-success {
+    width: 100%;
+    padding: 20px 16px;
+    flex-wrap: wrap;
+  }
+
+  .submission-status {
+    width: 100%;
+    margin-left: 0;
+    text-align: center;
+  }
+
+
+  /* =======================================================
+     EMPTY STATE
+     ======================================================= */
+
+  .journal-empty {
+    padding: 45px 20px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   <= 480px
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .dashboard-content {
+    padding: 17px 12px 30px;
+  }
+
+  .dashboard-header {
+    margin-bottom: 20px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 21px;
+  }
+
+  .header-description {
+    font-size: 11px;
+  }
+
+  .dashboard-stats {
+    gap: 8px;
+  }
+
+  .dashboard-stat {
+    padding: 12px 10px;
+  }
+
+  .stat-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .dashboard-stat strong {
+    font-size: 17px;
+  }
+
+  .dashboard-card {
+    padding: 15px;
+  }
+
+  .card-title h2,
+  .card-heading h2 {
+    font-size: 15px;
+  }
+
+  .activity-status {
+    display: none;
+  }
+
+  .journal-card {
+    padding: 12px;
+  }
+
+  .journal-date {
+    width: 43px;
+    height: 53px;
+  }
+
+  .journal-date strong {
+    font-size: 18px;
+  }
+
+  .journal-actions button,
+  .journal-actions a {
+    flex: 1;
+    text-align: center;
+  }
+
+  .attendance-main-card {
+    padding: 15px;
+  }
+
+  .attendance-button {
+    padding: 12px 15px;
+  }
+
+  .application-card,
+  .journal-form-card,
+  .journal-detail-card {
+    padding: 16px 13px;
+  }
+
+  .login-box {
+    padding: 22px 17px;
+  }
+
 }
