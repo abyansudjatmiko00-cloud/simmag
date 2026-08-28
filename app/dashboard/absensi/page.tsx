@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import DashboardSidebar from "@/components/DashboardSidebar";
 
 type Attendance = {
   id: number;
@@ -81,70 +82,7 @@ export default function AbsensiPage() {
     <main className="dashboard">
 
       {/* SIDEBAR */}
-      <aside className="sidebar">
-
-        <div className="sidebar-logo">
-          <span className="logo-icon">S</span>
-          <span>SIMMAG</span>
-        </div>
-
-        <nav className="sidebar-menu">
-
-          <Link
-            href="/dashboard"
-            className="menu-item"
-          >
-            <span>📊</span>
-            Dashboard
-          </Link>
-
-          <Link
-            href="/dashboard/jurnal"
-            className="menu-item"
-          >
-            <span>📖</span>
-            Jurnal Harian
-          </Link>
-
-          <Link
-            href="/dashboard/absensi"
-            className="menu-item active"
-          >
-            <span>📅</span>
-            Absensi
-          </Link>
-
-          <Link
-            href="/dashboard/pengajuan"
-            className="menu-item"
-          >
-            <span>📋</span>
-            Pengajuan Magang
-          </Link>
-
-        </nav>
-
-        <div className="sidebar-bottom">
-
-          <Link
-            href="/"
-            className="menu-item"
-          >
-            <span>🏠</span>
-            Halaman Utama
-          </Link>
-
-          <Link
-            href="/login"
-            className="menu-item logout"
-          >
-            <span>↪</span>
-            Keluar
-          </Link>
-
-        </div>
-
-      </aside>
+    <DashboardSidebar />
 
 
       {/* CONTENT */}
